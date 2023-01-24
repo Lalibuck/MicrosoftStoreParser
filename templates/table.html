@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+    {% block content %}
+        <div class="row">
+        <div class="col-md-4">
+        <form method="POST">
+            Company:
+                <input type="text" name="search" value={{ search }}>
+            <label class="form-actions">
+            <button type="submit" class="btn btn-primary" formaction="/">
+            Search</button>
+            </label>
+         </form>
+        </div>
+            <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+        <form method="POST">
+            Records per page:
+            <div class="btn-group" style="width: 10px; height: 30px;" role="group">
+            <button type="submit" formaction= "/" class="btn btn-outline-primary {% if pages.per_page == 10 %} active {% endif %}" value="10" name="pag_number">10</button>
+            <button type="submit" formaction= "/"  class="btn btn-outline-primary {% if pages.per_page == 20 %} active {% endif %}" value="20" name="pag_number">20</button>
+            </div>
+        </form>
+        </div>
+        </div><br>
+        <table class="table">
+          <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Company</th>
+                <th scope="col">
+                    <form method="POST">
+                        Release year
+                        <div class="btn-group position-absolute" style="width: 10px; height: 25px;" role="group">
+                            <button type="submit" formaction= "/" class="btn btn-outline-primary {% if sort == 'asc' %} active {% endif %}" value="asc" name="release_sort">
+                                <div class="my-0 mx-0">&#8593</div>
+                            </button>
+                            <button type="submit" formaction= "/"  class="btn btn-outline-primary {% if sort == 'desc' %} active {% endif %}" value="desc" name="release_sort">
+                                <div class="my-0 mx-0">&#8595</div>
+                            </button>
+                        </div>
+                    </form>
+                </th>
+                <th scope="col">Email</th>
+            </tr>
+          </thead>
+          {% for app in pages.items %}
+                <tbody>
+                    <tr>
+                        <td>{{ app.name }}</td>
+                        <td>{{ app.company }}</td>
+                        <td>{{ app.release }}</td>
+                        <td>{{ app.email }}</td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+        <nav>
+            <ul class="pagination">
+                <li class="page-item {% if not pages.has_prev %} disabled {% endif %}">
+                    <a class="page-link" href="./?page={{ pages.prev_num }}">Previous</a>
+                </li>
+                {% for page in pages.iter_pages() %}
+                    {% if page %}
+                    {% if page > pages.page - 3 and page < pages.page + 3 %}
+                    <li {% if page == pages.page %} class="active" {% endif %}>
+                        <a class="page-link" href="./?page={{ page }}"> {{ page }} </a></li>
+                    {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item {% if not pages.has_next %} disabled {% endif %}">
+                <a class="page-link" href="./?page={{ pages.next_num }}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    {% endblock %}

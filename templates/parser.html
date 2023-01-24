@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+    {% block content %}
+        <form action= "/parser" method="POST">
+        <div class="row">
+            <div class="col-4">
+                <p class="fw-semibold fs-5">Category:
+        <select name="category" id="category">
+            <option value="Business">Business</option>
+            <option value="Developer tools">Developer tools</option>
+            <option value="Education">Education</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Health & fitness">Health & fitness</option>
+            <option value="Kids & family">Kids & family</option>
+            <option value="Lifestyle">Lifestyle</option>
+            <option value="Multimedia design">Multimedia design</option>
+            <option value="Music">Music</option>
+            <option value="News & weather">News & weather</option>
+            <option value="Personal finance">Personal finance</option>
+            <option value="Personalization">Personalization</option>
+            <option value="Security">Security</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Social">Social</option>
+            <option value="Sports">Sports</option>
+            <option value="Travel">Travel</option>
+            <option value="Utilities & tools">Utilities & tools</option>
+        </select>
+                </p>
+            </div>
+        <div class="col-6">
+         <p class="fw-semibold fs-5">Amount of the parsed apps:
+            <input type="text" name="amount" value={{amount}}>
+            {% if message %}
+                {{ message }}
+            {% endif %}
+        <label class="form-actions">
+            <button type="submit" class="btn btn-primary">
+            Parse</button>
+        </label>
+        </div></p>
+        </div>
+        </form>
+    {% endblock %}
