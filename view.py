@@ -88,6 +88,7 @@ def parser():
             Application.query.delete()
             # run selenium webdriver
             browser = driver_preprocess()
+            count = 0
             # forming list of parsing app links
             for link in category_parser(browser, amount, request.form['category']):
                 # parse app page
@@ -96,11 +97,11 @@ def parser():
                     # add application information to database
                     application = Application(name=app_inform[0], company=app_inform[1], release=app_inform[2], email=app_inform[3])
                     db.session.add(application)
-                    db.session.commit()
                 except:
                     message = 'Cannot record the data'
                     browser.quit()
                     return render_template('parser.html', message=message)
+            db.session.commit()
             browser.quit()
             return redirect('/')
     # display parsing params
